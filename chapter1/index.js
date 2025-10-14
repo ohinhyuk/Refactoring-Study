@@ -5,6 +5,7 @@ function statement(invoice, plays) {
   let totalAmount = 0;
   let volumneCredits = 0;
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
+
   const format = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -25,7 +26,7 @@ function statement(invoice, plays) {
       case "comedy": // 희극
         thisAmount = 30000;
         if (perf.audience > 20) {
-          thisAmount += 10000 + 500 * (perf.audience - 30);
+          thisAmount += 10000 + 500 * (perf.audience - 20);
         }
         thisAmount += 300 * perf.audience;
         break;
@@ -44,8 +45,10 @@ function statement(invoice, plays) {
     }석)\n`;
     totalAmount += thisAmount;
   }
+
   result += `총액: ${format(totalAmount / 100)}\n`;
   result += `적립 포인트: ${volumneCredits}점\n`;
+
   return result;
 }
 
