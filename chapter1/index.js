@@ -1,7 +1,4 @@
-import plays from "./plays.json" assert { type: "json" };
-import invoices from "./invoices.json" assert { type: "json" };
-
-function statement(invoice, plays) {
+const statement = (invoice, plays) => {
   let totalAmount = 0;
   let volumneCredits = 0;
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
@@ -50,7 +47,6 @@ function statement(invoice, plays) {
   result += `적립 포인트: ${volumneCredits}점\n`;
 
   return result;
-}
+};
 
-const result = statement(invoices[0], plays);
-console.log(result);
+module.exports = statement;
