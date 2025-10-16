@@ -1,3 +1,6 @@
+const TragedyCalculator = require("./tragedyCalculator");
+const ComedyCalculator = require("./comedyCalculator");
+
 function createStatementData(invoice, plays) {
   const statementData = {};
   statementData.customer = invoice.customer;
@@ -13,12 +16,23 @@ function createStatementData(invoice, plays) {
 
   function enrichPerformance(aPerformance) {
     const result = Object.assign({}, aPerformance);
+    const calculator = createCalculator(aPerformance, playFor(aPerformance));
 
     result.play = playFor(aPerformance).name;
-    result.amount = amountFor(aPerformance);
-    result.volumeCredits = volumneCreditsFor(aPerformance);
+    result.amount = calculator.amount;
+    result.volumeCredits = calculator.volumeCredits;
 
     return result;
+
+    function createCalculator(aPerformance, aPlay) {
+      switch (aPlay.type) {
+        case "tragedy":
+          return new TragedyCalculator(aPerformance, aPlay);
+
+        case "comedy":
+          return new ComedyCalculator(aPerformance, aPlay);
+      }
+    }
   }
 
   function playFor(aPerformance) {
